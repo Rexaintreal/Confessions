@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Create Confession</title>
+    <!-- External CSS for Font Awesome, Google Fonts, TailwindCSS -->
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Open+Sans:wght@400;600&display=swap" rel="stylesheet">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/tailwindcss/2.2.19/tailwind.min.css" rel="stylesheet">
+    <!-- Link to a custom stylesheet for additional styles -->
+    <link rel="stylesheet" href="{{ url_for('static', filename='merged.css') }}">
+
+</head>
+<body class="bg-[#262626] text-white font-sans">
+    <div class="flex flex-col min-h-screen">
+        <!-- Top Navbar with a back button and title -->
+        <header class="bg-[#262626] shadow-md flex items-center justify-between p-4 relative">
+            <button onclick="navigateHome()" class="text-white absolute left-4">
+                <!-- Icon for back button -->
+                <i class="fas fa-arrow-left"></i>
+            </button>
+            <h1 class="text-2xl text-center w-full">Create Confession</h1>
+        </header>
+
+        <!-- Main Content Section -->
+        <main class="flex-1 overflow-y-auto p-4">
+            <!-- Textarea for entering the confession -->
+            <div class="flex items-start gap-4">
+                <!-- User icon -->
+                <i class="fas fa-user user-icon text-white text-4xl"></i>
+                <!-- Confession text input area -->
+                <textarea id="confession-text" class="w-full h-64 bg-white text-black p-4 rounded-lg" placeholder="Write your confession here..."></textarea>
+            </div>
+            <!-- Submit button for the confession -->
+            <button onclick="submitConfession()" class="bg-white hover:bg-white text-black py-2 px-4 rounded-full mt-4 w-full">Submit</button>
+        </main>
+    </div>
+
+    <!-- Link to the custom script file -->
+    <script src="{{ url_for('static', filename='script.js') }}"></script>
+</body>
+</html>

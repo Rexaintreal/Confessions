@@ -1,0 +1,27 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Login</title>
+    <!-- External Stylesheets -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=Open+Sans:wght@400;600&display=swap" rel="stylesheet">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/tailwindcss/2.2.19/tailwind.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="{{ url_for('static', filename='merged.css') }}">
+</head>
+<body class="bg-gray-800 text-white font-sans flex items-center justify-center h-screen">
+    <div class="bg-gray-900 p-8 rounded-lg shadow-lg w-full max-w-sm text-center">
+        <h1 class="text-2xl font-semibold mb-6">Login</h1>
+        <button onclick="signInWithGoogle()" class="w-full bg-red-500 hover:bg-red-600 text-white py-2 rounded flex items-center justify-center">
+            <i class="fab fa-google mr-2"></i> Sign in with Google
+        </button>
+    </div>
+
+    <script>
+        function signInWithGoogle() {
+            window.location.href = '/login'; // Redirect to login route or trigger the OAuth flow
+        }
+    </script>
+</body>
+</html>

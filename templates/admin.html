@@ -1,0 +1,152 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Admin Panel</title>
+    <!-- External CSS for Font Awesome, Google Fonts, and TailwindCSS -->
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Open+Sans:wght@400;600&display=swap" rel="stylesheet">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/tailwindcss/2.2.19/tailwind.min.css" rel="stylesheet">
+
+    <style>
+        /* Custom styles for the admin panel */
+        body {
+            background-color: #1B1B1B; /* Dark background */
+            color: #FFFFFF; /* White text color */
+            font-family: 'Open Sans', sans-serif; /* Open Sans font */
+        }
+        .container {
+            padding: 2rem; /* Padding around the container */
+        }
+        .card {
+            background-color: #262626; /* Card background color */
+            padding: 1rem; /* Padding inside the card */
+            border-radius: 8px; /* Rounded corners for the card */
+            margin-bottom: 1rem; /* Space below the card */
+        }
+        .card h2 {
+            margin-bottom: 1rem; /* Space below the card heading */
+        }
+        .card button {
+            background-color: #E53E3E; /* Red button */
+            color: white; /* White text on the button */
+            padding: 0.5rem 1rem; /* Padding inside the button */
+            border: none; /* Remove button border */
+            border-radius: 4px; /* Rounded button corners */
+            cursor: pointer; /* Pointer cursor on hover */
+        }
+        .card button:hover {
+            background-color: #C53030; /* Darker red when hovering */
+        }
+        .list {
+            margin-top: 1rem; /* Margin above the list */
+            max-height: 200px; /* Limit the height of the list */
+            overflow-y: auto; /* Enable scrolling if the list exceeds height */
+        }
+        .list-item {
+            border-bottom: 1px solid #444; /* Light border between list items */
+            padding: 0.5rem 0; /* Padding around each list item */
+            display: flex; /* Use flexbox to align items */
+            justify-content: space-between; /* Space out the list item content */
+            align-items: center; /* Center align content vertically */
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <!-- Admin Panel Header -->
+        <h1 class="text-3xl font-semibold mb-6">Admin Panel</h1>
+
+        <!-- Manage Users Section -->
+        <div class="card">
+            <h2 class="text-2xl font-semibold">Manage Users</h2>
+            <!-- List of users will be dynamically loaded here -->
+            <div id="user-list" class="list"></div>
+        </div>
+
+        <!-- Manage Posts Section -->
+        <div class="card">
+            <h2 class="text-2xl font-semibold">Manage Posts</h2>
+            <!-- List of posts will be dynamically loaded here -->
+            <div id="post-list" class="list"></div>
+        </div>
+    </div>
+
+    <script>
+        // Event listener for when the page has finished loading
+        document.addEventListener('DOMContentLoaded', () => {
+            loadUsers(); // Load users
+            loadPosts(); // Load posts
+            // Additional functions like loadLogs() can be added here if necessary
+        });
+
+        // Function to load users from the server
+        function loadUsers() {
+            fetch('/admin/users') // Fetch user data from the server
+                .then(response => response.json()) // Parse response as JSON
+                .then(data => {
+                    const userList = document.getElementById('user-list'); // Get the user list element
+                    userList.innerHTML = ''; // Clear any existing content
+                    // Loop through the user data and display each user
+                    data.forEach(user => {
+                        const userItem = document.createElement('div'); // Create a div for each user
+                        userItem.classList.add('list-item'); // Add the 'list-item' class
+                        userItem.textContent = `Email: ${user.email}`; // Display user email
+                        userList.appendChild(userItem); // Add user item to the list
+                    });
+                });
+        }
+
+        // Function to load posts from the server
+        function loadPosts() {
+            fetch('/admin/posts') // Fetch post data from the server
+                .then(response => response.json()) // Parse response as JSON
+                .then(data => {
+                    const postList = document.getElementById('post-list'); // Get the post list element
+                    postList.innerHTML = ''; // Clear any existing content
+                    // Loop through the post data and display each post
+                    data.forEach(post => {
+                        const postItem = document.createElement('div'); // Create a div for each post
+                        postItem.classList.add('list-item'); // Add the 'list-item' class
+                        postItem.id = `post-${post.id}`; // Set a unique ID for the post
+
+                        const postText = document.createElement('span'); // Create a span for the post text
+                        postText.textContent = `ID: ${post.id}, Text: ${post.text}`; // Display post ID and text
+
+                        // Create a delete button for each post
+                        const deleteButton = document.createElement('button');
+                        deleteButton.textContent = 'Delete'; // Button text
+                        deleteButton.onclick = () => deletePost(post.id); // Delete post on click
+
+                        postItem.appendChild(postText); // Add post text to the post item
+                        postItem.appendChild(deleteButton); // Add delete button to the post item
+                        postList.appendChild(postItem); // Add post item to the list
+                    });
+                });
+        }
+
+        // Function to delete a post
+        function deletePost(postId) {
+            fetch(`/delete_post/${postId}`, {
+                method: 'DELETE', // HTTP method is DELETE
+            })
+            .then(response => response.json()) // Parse the response as JSON
+            .then(data => {
+                if (data.status === 'success') {
+                    alert('Post deleted successfully.'); // Show success message
+                    const postElement = document.getElementById(`post-${postId}`); // Get the deleted post element
+                    if (postElement) {
+                        postElement.remove(); // Remove the post element from the page
+                    }
+                } else {
+                    alert(`Failed to delete the post: ${data.message}`); // Show failure message
+                }
+            })
+            .catch(error => {
+                console.error('Error:', error); // Log any errors that occur
+            });
+        }
+    </script>
+</body>
+</html>
