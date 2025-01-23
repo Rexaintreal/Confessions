@@ -9,25 +9,27 @@
     <link href="https://cdnjs.cloudflare.com/ajax/libs/tailwindcss/2.2.19/tailwind.min.css" rel="stylesheet">
     <link rel="stylesheet" href="{{ url_for('static', filename='merged.css') }}">
 </head>
-<body class="bg-gray-900 text-white font-sans">
+<body class="bg-[#1B1B1B] text-white font-sans">
     <div class="flex flex-col min-h-screen">
         <!-- Top Navbar -->
-        <header class="bg-gray-800 shadow-md flex items-center justify-between p-4 relative">
-            <button onclick="navigateHome()" class="text-white">
-                <i class="fas fa-arrow-left"></i>
+        <nav class="top-nav fixed top-0 left-0 right-0 p-4 bg-[#262626] z-10 flex items-center justify-between">
+            <button onclick="logout()" class="text-white">
+                <i class="fas fa-sign-out-alt"></i>
             </button>
-            <h1 class="text-2xl font-semibold text-center w-full">My Posts</h1>
-        </header>
-        
+            <h1 class="text-2xl font-semibold text-white">Confessions</h1>
+            <button onclick="viewLikes()" class="text-white">
+                <i class="fas fa-heart"></i>
+            </button>
+        </nav>
         <!-- Main Content -->
-        <main class="flex-1 overflow-y-auto p-4" id="main-content">
+        <main class="main" id="main-content">
             <div id="user-posts-container" class="space-y-4">
                 <!-- User posts will be dynamically generated here -->
             </div>
         </main>
 
         <!-- Bottom Navbar -->
-        <footer class="bg-gray-800 text-center py-4 fixed bottom-0 inset-x-0 flex justify-around">
+        <footer class="bottom-nav">
             <button onclick="navigateHome()" class="text-white">
                 <div class="flex flex-col items-center">
                     <i class="fas fa-home"></i>
@@ -48,6 +50,19 @@
             </button>
         </footer>
     </div>
+    <!-- Feedback Modal -->
+    <div id="feedback-modal" class="fixed inset-0 bg-black bg-opacity-75 flex items-center justify-center hidden">
+        <div class="bg-white text-black p-4 rounded-lg">
+            <h2 class="text-xl font-semibold mb-4">Thanks for using our app!</h2>
+            <p>Your feedback is valuable. Try connecting on Instagram with the developer.</p>
+            <div class="mt-4 flex justify-end">
+                <button id="visit-instagram-button" class="bg-blue-600 hover:bg-blue-700 text-white py-2 px-4 rounded-full">Visit Instagram</button>
+                <button id="close-modal-button" class="bg-gray-600 hover:bg-gray-700 text-white py-2 px-4 rounded-full ml-2">Close</button>
+            </div>
+        </div>
+    </div>
     <script src="{{ url_for('static', filename='profile.js') }}"></script>
+    <script src="{{ url_for('static', filename='script.js') }}"></script>
+
 </body>
 </html>

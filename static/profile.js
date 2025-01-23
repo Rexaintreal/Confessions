@@ -10,7 +10,21 @@ document.addEventListener('DOMContentLoaded', () => {
                 userPostsContainer.appendChild(postElement);
             });
         });
+    // Modal close button event
+    const closeModalButton = document.getElementById('close-modal-button');
+    if (closeModalButton) {
+        closeModalButton.addEventListener('click', () => {
+            document.getElementById('feedback-modal').classList.add('hidden');
+        });
+    }
 
+    // Visit Instagram button event
+    const visitInstagramButton = document.getElementById('visit-instagram-button');
+    if (visitInstagramButton) {
+        visitInstagramButton.addEventListener('click', () => {
+            window.location.href = 'https://www.instagram.com/saurabhcodesawfully';
+        });
+    }
     // Function to create a post element
     const createPostElement = (post) => {
         const postDiv = document.createElement('div');

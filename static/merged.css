@@ -1,71 +1,116 @@
 /* merged.css */
-body {
+* {
     margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+html, body {
+    height: 100%;
+    width: 100%;
+    margin: 0;
+}
+
+body {
     font-family: 'Open Sans', sans-serif;
-    background-color: #1B1B1B; /* Eerie Black background color */
-    color: #FFFFFF; /* White text color */
+    background-color: #ffffff;
+    color: #1F2937;
+    display: flex;
+    flex-direction: column;
+    height: 100%;
+    width: 100%;
+    overflow-x: hidden;
 }
 
 .container {
     display: flex;
     flex-direction: column;
-    min-height: 100vh;
+    flex: 1;
+    height: 100%;
+    width: 100%;
 }
 
 .header, .footer, .bottom-nav {
-    background-color: #262626; /* Raisin Black background color */
+    background-color: #1F2937;
+    width: 100%;
 }
 
-.header {
+/* Top Navbar */
+.top-nav {
     text-align: center;
     padding: 1rem;
     box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
-    color: #FFFFFF; /* White text color */
+    color: #ffffff;
+    flex-shrink: 0;
+    background-color: #1F2937;
+    width: 100%;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    z-index: 10;
+    box-sizing: border-box;
 }
 
+/* Main Content */
 .main {
     flex: 1;
-    overflow-y: auto;
     padding: 1rem;
     padding-bottom: 80px; /* Space for bottom navbar */
+    width: 100%;
+    margin-top: 80px; /* Top space to avoid overlap with fixed top navbar */
+    box-sizing: border-box;
+    display: flex;
+    flex-direction: column;
 }
 
-#user-posts-container, #posts-container {
+/* Container for Posts */
+#posts-container {
     display: flex;
     flex-direction: column;
     gap: 1rem;
+    width: 100%;
+    flex-grow: 1;
+    box-sizing: border-box;
 }
 
+/* Individual Post */
 .post {
-    background-color: #2F2F2F; /* Dark Charcoal background color */
-    color: #FFFFFF; /* White text color */
+    background-color: #f3f4f6;
+    color: #1F2937;
     padding: 1rem;
     border-radius: 8px;
     box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
     display: flex;
     flex-direction: column;
     gap: 0.5rem;
-    max-height: 250px; /* Set max height for confession container */
-    overflow-y: auto; /* Enable vertical scrolling if content is too large */
-    position: relative; /* For delete button positioning */
+    max-height: 250px;
+    overflow-y: auto;
+    position: relative;
+    width: 100%;
+    box-sizing: border-box;
 }
 
+/* Post Content Styling */
 .post-content {
     overflow-y: auto;
-    max-height: 8rem; /* Adjust as needed */
-    padding-right: 2rem; /* Space for delete button */
+    max-height: 8rem;
+    padding-right: 2rem;
 }
 
 .delete-button {
     position: absolute;
     top: 0.5rem;
     right: 0.5rem;
-    color: #E53E3E;
+    color: #EF4444;
     cursor: pointer;
 }
 
 .delete-button:hover {
-    color: #C53030;
+    color: #DC2626;
 }
 
 .post-header {
@@ -78,38 +123,15 @@ body {
     width: 40px;
     height: 40px;
     border-radius: 50%;
-    background-color: #7f7f7f; /* Medium gray background color */
+    background-color: #D1D5DB;
 }
 
 .post-header .username {
     font-weight: 600;
-    color: #FFFFFF; /* White text color */
+    color: #1F2937;
 }
 
-.footer {
-    padding: 1rem;
-    text-align: center;
-    display: flex;
-    justify-content: space-around;
-    position: fixed;
-    bottom: 0;
-    width: 100%;
-    height: 60px;
-    color: #FFFFFF; /* White text color */
-}
-
-.footer button {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    gap: 0.2rem;
-    font-size: 0.9rem;
-}
-
-.footer button i {
-    font-size: 1.5rem;
-}
-
+/* Bottom Navbar */
 .bottom-nav {
     position: fixed;
     bottom: 0;
@@ -119,7 +141,18 @@ body {
     text-align: center;
     display: flex;
     justify-content: space-around;
-    color: #FFFFFF; /* White text color */
+    color: #ffffff;
+    background-color: #1F2937;
+    box-sizing: border-box;
+}
+
+.submit{
+    background-color: #1F2937;
+    color: white;
+}
+.textarea{
+    background-color: #1F2937;
+    color: #D1D5DB;
 }
 
 .bottom-nav button {
@@ -134,8 +167,18 @@ body {
     font-size: 1.5rem;
 }
 
+/* Media Queries for Responsiveness */
 @media (max-width: 600px) {
     .post {
         padding: 0.5rem;
+    }
+
+    .footer, .bottom-nav {
+        flex-direction: row;
+        padding: 0.5rem;
+    }
+
+    .footer button, .bottom-nav button {
+        font-size: 0.8rem;
     }
 }

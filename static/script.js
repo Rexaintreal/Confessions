@@ -56,47 +56,6 @@ document.addEventListener('DOMContentLoaded', () => {
     }
 });
 
-function createConfession() {
-    const confessionText = prompt('Enter your confession:');
-    if (confessionText) {
-        fetch('/confess', {
-            method: 'POST',
-            headers: {
-                'Content-Type': 'application/json'
-            },
-            body: JSON.stringify({ confession: confessionText })
-        })
-        .then(response => response.json())
-        .then(data => {
-            if (data.status === 'success') {
-                location.reload();
-            } else {
-                alert('You need to log in to create a confession.');
-            }
-        });
-    }
-}
-
-function submitConfession() {
-    const confessionText = document.getElementById('confession-text').value;
-    if (confessionText) {
-        fetch('/confess', {
-            method: 'POST',
-            headers: {
-                'Content-Type': 'application/json'
-            },
-            body: JSON.stringify({ confession: confessionText })
-        })
-        .then(response => response.json())
-        .then(data => {
-            if (data.status === 'success') {
-                navigateHome();
-            } else {
-                alert('You need to log in to create a confession.');
-            }
-        });
-    }
-}
 
 function logout() {
     window.location.href = '/logout';
