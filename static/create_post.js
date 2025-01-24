@@ -103,9 +103,61 @@ document.addEventListener('DOMContentLoaded', () => {
         themeIcon.className = newTheme === 'dark' ? 'fas fa-moon' : 'fas fa-sun';
     });
 });
-// Add a live character counter for the textarea
+
 document.getElementById('confession-text').addEventListener('input', function () {
     const charCount = this.value.length;
     const maxChars = this.getAttribute('maxlength');
-    document.getElementById('char-count').textContent = charCount;
+    const charCountElement = document.getElementById('char-count');
+    
+    // Update the character count display including the "characters" text
+    charCountElement.textContent = `${charCount}/${maxChars} characters`;
 });
+
+
+function updatePreview() {
+    const confessionText = document.getElementById('confession-text').value;
+    const previewBox = document.getElementById('preview');
+    const charCount = document.getElementById('char-count');
+    
+    previewBox.innerHTML = ''; // Clear previous content
+
+    // Update character counter
+    charCount.textContent = confessionText.length;
+
+    if (confessionText.trim()) {
+        // Create post preview elements
+        const postDiv = document.createElement('div');
+        postDiv.classList.add('post');
+
+        const postHeader = document.createElement('div');
+        postHeader.classList.add('post-header');
+
+        const userIcon = document.createElement('i');
+        userIcon.classList.add('fas', 'fa-user', 'user-icon');
+
+        const usernameSpan = document.createElement('span');
+        usernameSpan.classList.add('username');
+        usernameSpan.textContent = 'Anonymous'; // Default username
+
+        postHeader.appendChild(userIcon);
+        postHeader.appendChild(usernameSpan);
+
+        const postText = document.createElement('div');
+        postText.classList.add('post-text');
+        postText.textContent = confessionText;
+
+        const postTimestamp = document.createElement('div');
+        postTimestamp.classList.add('post-timestamp');
+        postTimestamp.textContent = 'Preview Mode'; // Fixed text for preview
+
+        postDiv.appendChild(postHeader);
+        postDiv.appendChild(postText);
+        postDiv.appendChild(postTimestamp);
+
+        // Append to preview box
+        previewBox.appendChild(postDiv);
+        previewBox.classList.remove('hidden');
+    } else {
+        previewBox.classList.add('hidden');
+    }
+}
