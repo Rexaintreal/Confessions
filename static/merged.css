@@ -302,3 +302,7 @@ body {
 .rounded-full {
     border-radius: 9999px;
 }
+#char-count {
+    color: var(--text-color);
+    font-weight: bold;
+}
