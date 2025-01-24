@@ -5,7 +5,7 @@ import firebase_admin
 from firebase_admin import credentials, firestore
 import json
 import os
-
+from datetime import datetime
 # Initialize Flask app and CORS (for cross-origin requests)
 app = Flask(__name__)
 app.secret_key = 'your_secret_key'  # Change this to a more secure secret key
@@ -107,26 +107,36 @@ def get_confessions():
     confessions_list = [conf.to_dict() for conf in confessions]
     return jsonify(confessions_list)
 
-# Post a new confession route
 @app.route('/confess', methods=['POST'])
 def confess():
-    if 'google_token' in session:  # Check if the user is authenticated
+    if 'google_token' in session:
         user_info = session.get('user_info')
         confession = request.json.get('confession')
-        db.collection('confessions').add({'text': confession, 'user': user_info['email']})
+        timestamp = datetime.utcnow().isoformat()  # Get current UTC time in ISO format
+        db.collection('confessions').add({
+            'text': confession, 
+            'user': user_info['email'],
+            'timestamp': timestamp
+        })
         return jsonify({'status': 'success'}), 200
-    return jsonify({'status': 'unauthorized'}), 401  # Unauthorized if not logged in
+    return jsonify({'status': 'unauthorized'}), 401
 
-# Get posts by a specific user route
 @app.route('/user_posts', methods=['GET'])
 def user_posts():
     if 'google_token' in session:
         user_info = session.get('user_info')
         user_email = user_info['email']
         user_posts = db.collection('confessions').where('user', '==', user_email).stream()
-        user_posts_list = [{'id': post.id, **post.to_dict()} for post in user_posts]
+        user_posts_list = []
+        for post in user_posts:
+            post_data = post.to_dict()
+            post_data['id'] = post.id
+            # Format the timestamp if it exists
+            if 'timestamp' in post_data:
+                post_data['timestamp'] = post_data['timestamp']
+            user_posts_list.append(post_data)
         return jsonify(user_posts_list)
-    return jsonify({'status': 'unauthorized'}), 401  # Unauthorized if not logged in
+    return jsonify({'status': 'unauthorized'}), 401
 
 # Delete a specific post route
 @app.route('/delete_post/<string:post_id>', methods=['DELETE'])
