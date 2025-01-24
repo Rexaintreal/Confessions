@@ -182,3 +182,123 @@ body {
         font-size: 0.8rem;
     }
 }
+/*Dark Mode*/
+/* Base Theme Colors */
+:root {
+    --bg-color: #ffffff;
+    --text-color: #1F2937;
+    --navbar-color: #1F2937;
+    --post-bg: #f3f4f6;
+    --textarea-bg: #d3d3d3;
+    --textarea-border: #d1d5db;
+    --textarea-text: #1F2937;
+    --button-bg: #d3d3d3;
+    --button-hover-bg: #d3caca;
+}
+
+[data-theme="dark"] {
+    --bg-color: #262626;
+    --text-color: #ffffff;
+    --navbar-color: #262626;
+    --post-bg: #333333;
+    --textarea-bg: #454545;
+    --textarea-border: #4B5563;
+    --textarea-text: #ffffff;
+    --button-bg: #454545;
+    --button-hover-bg: #6B7280;
+}
+
+body {
+    background-color: var(--bg-color);
+    color: var(--text-color);
+}
+.username {
+    color: var(--username-color, #333333); /* Default for light mode */
+    font-weight: 600;
+    transition: color 0.3s ease;
+}
+
+[data-theme="dark"] .username {
+    color: #ffffff; /* Dark mode color for username */
+}
+/* Navbar Styling */
+.top-nav, .bottom-nav {
+    background-color: var(--navbar-color);
+}
+
+/* Post Styling */
+.post {
+    background-color: var(--post-bg);
+    color: var(--text-color);
+}
+
+/* Sun and Moon Icon Styling */
+#theme-toggle i {
+    font-size: 1.5rem;
+}
+
+/* Textarea Styling */
+.textarea {
+    background-color: var(--textarea-bg);
+    color: var(--textarea-text);
+    border: 1px solid var(--textarea-border);
+    border-radius: 0.5rem;
+    padding: 1rem;
+    font-size: 1rem;
+    resize: none;
+    width: 100%;
+    transition: border-color 0.3s ease, background-color 0.3s ease, color 0.3s ease;
+}
+
+.textarea:focus {
+    outline: none;
+    border-color: var(--button-hover-bg);
+}
+
+/* Button Styling */
+.submit {
+    background-color: var(--button-bg);
+    color: var(--text-color);
+    padding: 0.5rem 1rem;
+    border-radius: 9999px;
+    font-size: 1rem;
+    font-weight: bold;
+    cursor: pointer;
+    transition: background-color 0.3s ease, color 0.3s ease;
+    display: block;
+    text-align: center;
+    width: 100%;
+}
+
+.submit:hover {
+    background-color: var(--button-hover-bg);
+}
+
+/* Utility Classes */
+.w-full {
+    width: 100%;
+}
+
+.h-64 {
+    height: 16rem;
+}
+
+.p-4 {
+    padding: 1rem;
+}
+
+.pt-20 {
+    padding-top: 5rem;
+}
+
+.mt-4 {
+    margin-top: 1rem;
+}
+
+.rounded-lg {
+    border-radius: 0.5rem;
+}
+
+.rounded-full {
+    border-radius: 9999px;
+}
