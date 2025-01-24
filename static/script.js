@@ -14,7 +14,7 @@ document.addEventListener('DOMContentLoaded', () => {
         // Function to create a post element
         const createPostElement = (post) => {
             const postDiv = document.createElement('div');
-            postDiv.classList.add('post');
+            postDiv.classList.add('post', 'p-4', 'bg-[#333]', 'rounded-lg', 'space-y-2');
 
             const postHeader = document.createElement('div');
             postHeader.classList.add('post-header');
@@ -33,8 +33,17 @@ document.addEventListener('DOMContentLoaded', () => {
             postText.classList.add('post-text');
             postText.textContent = post.text;
 
+            const postTimestamp = document.createElement('div');
+            postTimestamp.classList.add('post-timestamp', 'text-sm', 'text-gray-400');
+            if (post.timestamp) {
+                postTimestamp.textContent = `Posted ${moment.utc(post.timestamp).fromNow()}`;
+            } else {
+                postTimestamp.textContent = 'Posted a long time ago';
+            }
+
             postDiv.appendChild(postHeader);
             postDiv.appendChild(postText);
+            postDiv.appendChild(postTimestamp);
             return postDiv;
         };
     }
@@ -56,6 +65,47 @@ document.addEventListener('DOMContentLoaded', () => {
     }
 });
 
+function createConfession() {
+    const confessionText = prompt('Enter your confession:');
+    if (confessionText) {
+        fetch('/confess', {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json'
+            },
+            body: JSON.stringify({ confession: confessionText })
+        })
+        .then(response => response.json())
+        .then(data => {
+            if (data.status === 'success') {
+                location.reload();
+            } else {
+                alert('You need to log in to create a confession.');
+            }
+        });
+    }
+}
+
+function submitConfession() {
+    const confessionText = document.getElementById('confession-text').value;
+    if (confessionText) {
+        fetch('/confess', {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json'
+            },
+            body: JSON.stringify({ confession: confessionText })
+        })
+        .then(response => response.json())
+        .then(data => {
+            if (data.status === 'success') {
+                navigateHome();
+            } else {
+                alert('You need to log in to create a confession.');
+            }
+        });
+    }
+}
 
 function logout() {
     window.location.href = '/logout';
