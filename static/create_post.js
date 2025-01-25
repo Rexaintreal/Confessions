@@ -15,55 +15,6 @@ document.addEventListener('DOMContentLoaded', () => {
         });
     }
 });
-
-function createConfession() {
-    const confessionText = prompt('Enter your confession:');
-    if (confessionText) {
-        fetch('/confess', {
-            method: 'POST',
-            headers: {
-                'Content-Type': 'application/json'
-            },
-            body: JSON.stringify({ confession: confessionText })
-        })
-        .then(response => response.json())
-        .then(data => {
-            if (data.status === 'success') {
-                location.reload();
-            } else {
-                alert('You need to log in to create a confession.');
-            }
-        });
-    }
-}
-
-
-function submitConfession() {
-    const confessionText = document.getElementById('confession-text').value;
-    const charCount = confessionText.length;
-
-    if (charCount === 0) {
-        alert('Confession cannot be empty.');
-        return;
-    }
-
-    fetch('/confess', {
-        method: 'POST',
-        headers: {
-            'Content-Type': 'application/json',
-        },
-        body: JSON.stringify({ confession: confessionText }),
-    })
-        .then((response) => response.json())
-        .then((data) => {
-            if (data.status === 'success') {
-                navigateHome();
-            } else {
-                alert('You need to log in to create a confession.');
-            }
-        });
-}
-
 function logout() {
     window.location.href = '/logout';
 }
@@ -104,21 +55,90 @@ document.addEventListener('DOMContentLoaded', () => {
     });
 });
 
+
+function createConfession() {
+    const confessionText = prompt('Enter your confession:');
+    if (confessionText) {
+        fetch('/confess', {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json'
+            },
+            body: JSON.stringify({ confession: confessionText })
+        })
+        .then(response => response.json())
+        .then(data => {
+            if (data.status === 'success') {
+                location.reload();
+            } else {
+                alert('You need to log in to create a confession.');
+            }
+        });
+    }
+}
+
+function submitConfession() {
+    const confessionText = document.getElementById('confession-text').value;
+    const charCount = confessionText.length;
+
+    if (charCount === 0) {
+        alert('Confession cannot be empty.');
+        return;
+    }
+
+    fetch('/confess', {
+        method: 'POST',
+        headers: {
+            'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({ confession: confessionText }),
+    })
+    .then((response) => response.json())
+    .then((data) => {
+        if (data.status === 'success') {
+            // Clear draft from localStorage after successful submission
+            localStorage.removeItem('draftConfession');
+            navigateHome();
+        } else {
+            alert('You need to log in to create a confession.');
+        }
+    });
+}
+
 document.getElementById('confession-text').addEventListener('input', function () {
     const charCount = this.value.length;
     const maxChars = this.getAttribute('maxlength');
     const charCountElement = document.getElementById('char-count');
-    
-    // Update the character count display including the "characters" text
+
+    // Update the character count display
     charCountElement.textContent = `${charCount}/${maxChars} characters`;
+
+    // Save the confession text to localStorage
+    localStorage.setItem('draftConfession', this.value);
 });
 
+// Retrieve saved confession draft from localStorage when page loads
+document.addEventListener('DOMContentLoaded', () => {
+    const savedConfession = localStorage.getItem('draftConfession');
+    const confessionTextArea = document.getElementById('confession-text');
+    const charCountElement = document.getElementById('char-count');
+    const maxChars = confessionTextArea.getAttribute('maxlength');
+
+    if (savedConfession) {
+        confessionTextArea.value = savedConfession;
+        // Update the character count display
+        charCountElement.textContent = `${savedConfession.length}/${maxChars} characters`;
+    }
+
+    // Update preview when page loads
+    updatePreview();
+});
 
 function updatePreview() {
     const confessionText = document.getElementById('confession-text').value;
     const previewBox = document.getElementById('preview');
     const charCount = document.getElementById('char-count');
-    
+
     previewBox.innerHTML = ''; // Clear previous content
 
     // Update character counter
@@ -148,7 +168,6 @@ function updatePreview() {
 
         const postTimestamp = document.createElement('div');
         postTimestamp.classList.add('post-timestamp');
-        postTimestamp.textContent = 'Preview Mode'; // Fixed text for preview
 
         postDiv.appendChild(postHeader);
         postDiv.appendChild(postText);
