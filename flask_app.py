@@ -5,7 +5,7 @@ import firebase_admin
 from firebase_admin import credentials, firestore
 import json
 import os
-from datetime import datetime
+from datetime import datetime, timedelta
 # Initialize Flask app and CORS (for cross-origin requests)
 app = Flask(__name__)
 app.secret_key = 'your_secret_key'  # Change this to a more secure secret key
@@ -31,6 +31,18 @@ google = oauth.register(
     client_kwargs={'scope': 'openid profile email'},
     jwks_uri='https://www.googleapis.com/oauth2/v3/certs'
 )
+app.permanent_session_lifetime = timedelta(days=365)  # Session lasts for 1 year
+
+@app.before_request
+def make_session_permanent():
+    session.permanent = True
+    
+app.config.update(
+    SESSION_COOKIE_SECURE=True,  # Enforces HTTPS
+    SESSION_COOKIE_HTTPONLY=True,  # Prevents JavaScript access
+    SESSION_COOKIE_SAMESITE='Lax'  # Restricts cross-site cookie usage
+)
+
 
 # Home page route
 @app.route('/')
