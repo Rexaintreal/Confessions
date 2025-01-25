@@ -1,4 +1,46 @@
-/* merged.css */
+/* Define CSS variables for theming */
+:root {
+    --scrollbar-track-color: #f0f0f0;
+    --scrollbar-thumb-color: #888;
+    --scrollbar-thumb-hover-color: #555;
+}
+
+.dark-mode {
+    --scrollbar-track-color: #6B7280;
+    --scrollbar-thumb-color: #262626;
+    --scrollbar-thumb-hover-color: #444;
+}
+
+/* Apply the scrollbar styles for WebKit-based browsers */
+html, body {
+    scrollbar-width: thin; /* For Firefox */
+    scrollbar-color: var(--scrollbar-thumb-color) var(--scrollbar-track-color); /* For Firefox */
+}
+
+::-webkit-scrollbar {
+    width: 12px; /* Adjust width for high-DPI screens */
+    height: 12px;
+}
+
+::-webkit-scrollbar-track {
+    background: var(--scrollbar-track-color);
+}
+
+::-webkit-scrollbar-thumb {
+    background: var(--scrollbar-thumb-color);
+    border-radius: 10px;
+}
+
+::-webkit-scrollbar-thumb:hover {
+    background: var(--scrollbar-thumb-hover-color);
+}
+
+/* Optional: Hide scrollbar for specific elements */
+.no-scrollbar::-webkit-scrollbar {
+    display: none;
+}
+
+/* Global reset and smooth scrolling */
 * {
     margin: 0;
     padding: 0;
@@ -8,7 +50,8 @@
 html, body {
     height: 100%;
     width: 100%;
-    margin: 0;
+    scroll-behavior: smooth;
+    overflow: auto; /* Ensure scrollbars are enabled */
 }
 
 body {
@@ -17,11 +60,10 @@ body {
     color: #1F2937;
     display: flex;
     flex-direction: column;
-    height: 100%;
-    width: 100%;
-    overflow-x: hidden;
+    overflow-x: hidden; /* Prevent horizontal scroll */
 }
 
+  
 .container {
     display: flex;
     flex-direction: column;
@@ -243,10 +285,11 @@ body {
     color: var(--textarea-text);
     border: 1px solid var(--textarea-border);
     border-radius: 0.5rem;
-    padding: 1rem;
+    padding: 0.5rem;
     font-size: 1rem;
     resize: none;
     width: 100%;
+    height: 50%;
     transition: border-color 0.3s ease, background-color 0.3s ease, color 0.3s ease;
 }
 
@@ -268,6 +311,7 @@ body {
     display: block;
     text-align: center;
     width: 100%;
+    margin-bottom: 80px; /* Space for bottom navbar */
 }
 
 .submit:hover {
@@ -306,3 +350,19 @@ body {
     color: var(--text-color);
     font-weight: bold;
 }
+.preview {
+    min-height: 3rem;
+    font-style: normal;
+    width: 100%;
+}
+
+/* For dark mode */
+html[data-theme='dark'] #char-count {
+    color: #fff; /* White color for dark mode */
+}
+
+/* For light mode */
+html[data-theme='light'] #char-count {
+    color: #333; /* Dark color for light mode */
+}
+
