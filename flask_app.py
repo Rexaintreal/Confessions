@@ -89,9 +89,16 @@ def create_post():
 def profile():
     if 'google_token' not in session:
         return redirect(url_for('login_page'))
+    
     user_info = session.get('user_info')
-    user_email = user_info['email'] if user_info else 'Unknown'
-    return render_template('profile.html', user_email=user_email)
+    user_email = user_info.get('email', 'Unknown') if user_info else 'Unknown'
+    
+    users = load_users()
+    user = next((u for u in users if u['email'] == user_email), None)
+    user_username = user['username'] if user and 'username' in user else 'Unknown'
+    
+    return render_template('profile.html', user_email=user_email, user_username=user_username)
+
 
 # Login page route
 @app.route('/loginpage')

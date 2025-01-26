@@ -366,3 +366,29 @@ html[data-theme='light'] #char-count {
     color: #333; /* Dark color for light mode */
 }
 
+:root {
+    --username-color: #333333; /* Default for light mode */
+    --email-color: #333333; /* Default for light mode */
+    --icon-color: #333333; /* Default for light mode */
+}
+
+[data-theme="dark"] {
+    --username-color: #ffffff; /* Dark mode color for username */
+    --email-color: #ffffff; /* Dark mode color for email */
+    --icon-color: #ffffff; /* Dark mode color for icon */
+}
+.username {
+    color: var(--username-color);
+    transition: color 0.3s ease;
+}
+
+.user-email {
+    color: var(--email-color);
+    transition: color 0.3s ease;
+}
+
+.user-icon-profile {
+    color: var(--icon-color);
+    font-size: 6rem; /* Adjust size as needed */
+    transition: color 0.3s ease;
+}

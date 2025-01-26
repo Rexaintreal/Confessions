@@ -13,7 +13,6 @@
 <body class="bg-[#1B1B1B] text-white font-sans">
     <div class="flex flex-col min-h-screen">
         <!-- Top Navbar -->
-        <!-- Inside the Top Navbar -->
         <nav class="top-nav fixed top-0 left-0 right-0 p-4 bg-[#262626] z-10 flex items-center justify-between">
             <button onclick="logout()" class="text-white">
                 <i class="fas fa-sign-out-alt"></i>
@@ -31,11 +30,18 @@
         </nav>
         <!-- Main Content -->
         <main class="main" id="main-content">
+            <div class="user-info flex items-center space-x-4 p-4">
+                <i class="fas fa-user-circle user-icon user-icon-profile"></i>
+                <div>
+                    <h2 id="username" class="text-2xl font-semibold username">{{ user_username }}</h2>
+                    <p id="user-email" class="text-gray-400 user-email">{{ user_email }}</p>
+                    <p id="post-count" class="text-gray-400">0 posts</p>
+                </div>
+            </div>
             <div id="user-posts-container" class="space-y-4">
                 <!-- User posts will be dynamically generated here -->
             </div>
         </main>
-
         <!-- Bottom Navbar -->
         <footer class="bottom-nav">
             <button onclick="navigateHome()" class="text-white">

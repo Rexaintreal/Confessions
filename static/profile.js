@@ -1,15 +1,18 @@
 document.addEventListener('DOMContentLoaded', () => {
     const userPostsContainer = document.getElementById('user-posts-container');
+    const postCountElement = document.getElementById('post-count');
 
     // Fetch user's posts from the server
     fetch('/user_posts')
         .then(response => response.json())
-        .then(data => {
-            data.forEach(post => {
+        .then(posts => {
+            postCountElement.textContent = `${posts.length} posts`;
+            posts.forEach(post => {
                 const postElement = createPostElement(post);
                 userPostsContainer.appendChild(postElement);
             });
         });
+
     // Modal close button event
     const closeModalButton = document.getElementById('close-modal-button');
     if (closeModalButton) {
@@ -25,8 +28,9 @@ document.addEventListener('DOMContentLoaded', () => {
             window.location.href = 'https://www.instagram.com/saurabhcodesawfully';
         });
     }
-     // Function to create a post element
-     const createPostElement = (post) => {
+
+    // Function to create a post element
+    const createPostElement = (post) => {
         const postDiv = document.createElement('div');
         postDiv.classList.add('post');
         postDiv.id = `post-${post.id}`;
@@ -69,7 +73,6 @@ document.addEventListener('DOMContentLoaded', () => {
         return postDiv;
     };
 
-    
     // Function to delete a post
     const deletePost = (postId) => {
         // Send a delete request to the server
@@ -82,6 +85,10 @@ document.addEventListener('DOMContentLoaded', () => {
                 const postElement = document.getElementById(`post-${postId}`);
                 if (postElement) {
                     postElement.remove();
+
+                    // Update the post count
+                    const currentCount = parseInt(postCountElement.textContent);
+                    postCountElement.textContent = `${currentCount - 1} posts`;
                 }
             } else {
                 alert('Failed to delete the post.');
@@ -94,7 +101,6 @@ function logout() {
     window.location.href = '/logout';
 }
 
-
 function navigateHome() {
     window.location.href = '/';
 }
@@ -106,10 +112,12 @@ function navigateToCreatePost() {
 function navigateToProfile() {
     window.location.href = '/profile';
 }
+
 function viewLikes() {
     // Show feedback modal
     document.getElementById('feedback-modal').classList.remove('hidden');
 }
+
 document.addEventListener('DOMContentLoaded', () => {
     const themeToggle = document.getElementById('theme-toggle');
     const themeIcon = document.getElementById('theme-icon');
