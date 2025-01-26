@@ -40,7 +40,7 @@ document.addEventListener('DOMContentLoaded', () => {
         const usernameSpan = document.createElement('span');
         usernameSpan.classList.add('username');
         usernameSpan.textContent = 'Anonymous';
-e
+
         postHeader.appendChild(userIcon);
         postHeader.appendChild(usernameSpan);
 
@@ -89,6 +89,11 @@ e
         });
     };
 });
+
+function logout() {
+    window.location.href = '/logout';
+}
+
 
 function navigateHome() {
     window.location.href = '/';

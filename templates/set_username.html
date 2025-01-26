@@ -1,0 +1,97 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Set Username</title>
+    <!-- Font Awesome -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+    <!-- Google Fonts -->
+    <link href="https://fonts.googleapis.com/css2?family=REM:wght@400;600&display=swap" rel="stylesheet">
+    <!-- Tailwind CSS -->
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/tailwindcss/2.2.19/tailwind.min.css" rel="stylesheet">
+</head>
+<body class="bg-black text-[#E4E2F2] font-['REM'] flex items-center justify-center min-h-screen">
+    <div class="bg-white p-6 rounded-lg shadow-lg w-11/12 max-w-sm text-center">
+        <h1 class="text-3xl font-semibold mb-4 text-[#E4E2F2]">Set Your Username</h1>
+        {% if error %}
+            <p class="text-red-500 text-sm mb-4">{{ error }}</p>
+        {% endif %}
+        <form method="POST" action="{{ url_for('set_username') }}">
+            <div class="mb-4">
+                <label for="username" class="block text-[#BBBBC4] mb-2 text-sm">Username</label>
+                <input 
+                    type="text" 
+                    id="username" 
+                    name="username" 
+                    required 
+                    class="w-full p-2 rounded-lg border border-gray-300 focus:outline-none focus:ring focus:ring-[#E4E2F2]"
+                >
+            </div>
+            <button type="submit" 
+                class="w-full bg-black hover:bg-black text-white font-medium py-2 rounded-lg shadow-md transition-all duration-300">
+                Set Username
+            </button>
+        </form>
+        <!-- Username Generator Section -->
+        <div class="mt-6">
+            <button id="generateUsername" onclick="generateUsername()""
+                class="w-full bg-[#BBBBC4] hover:bg-[#E4E2F2] text-black font-medium py-2 rounded-lg flex items-center justify-center shadow-md transition-all duration-300 mt-4">
+                <i class="fas fa-random mr-2"></i> Generate Random Username
+            </button>
+            <p class="text-[#BBBBC4] mt-4" id="generatedUsername"></p>
+        </div>
+    </div>
+
+    <script>
+        const usernames = [
+            "WhosNext?", "i_was_a_mistake", "Oops_Sorry", "RuthlessSlayer", "NewHighScore", 
+            "All_Time_Low", "XBoxShutDown", "DroppedMyController", "catch_me_if_u_can", "Unst0ppable",
+            "Sick0_M0de", "YourTurn", "Need4Speed", "sendc0ins", "i_can_see_your_pixels", "i_was_reloading", 
+            "Thanos_left_hand", "Funny Reddit Usernames", "InternetDad", "JuliusSneezer", "JuliusSeizure", 
+            "PotStirrer", "BloodBoiler", "oprah_wind_fury", "epic_fail", "tin_foil_hat", "yes_u_suck", 
+            "anonymouse", "im_confused", "name_not_important", "ctrl_alt_dlt", "google_was_my_idea", 
+            "bigfootisreal", "worldwarIII", "colonel_mustards_rope", "UFO_believer", "Area52", 
+            "ihaveaquestion", "AverageForumUser", "PoliticallyIncorrect", "always-plan-ahead", 
+            "SelfishPresely", "ElfishPresely", "BudLightyear", "bill_nye_the_russian_spy", "rambo_was_real", 
+            "khaleesisfourthdragon", "Stranger_Danger", "dont_eat_yellow_snow", "RealNameHidden", 
+            "FastAndCurious", "CasperTheFriendlyGhost", "unfriendme", "text_me_back", "ghostfacegangsta", 
+            "wont_do_streaks", "whats_my_snapscore", "how_you_doing", "im_watching_you", "ratedG", 
+            "magicschoolbusdropout", "say_my_name", "chickenriceandbeans", "thank_u_next", "Born-confused", 
+            "GawdOfROFLS", "cereal_killer", "strike_u_r_out", "behind_you", "who_am_i", "new_phone_hu_dis", 
+            "my_name_is", "hotline_bling", "send_memes", "drunkbetch", "LlamaDelRey", "snackluver", 
+            "ironmansnap", "Peekabo0", "LackingToesAndTolerance", "Hakuna_matata_", "Applebottomjeans", 
+            "Chin_chillin", "Santas_number1_elf", "CountSwagula", "nachocheese", "AnywayHeresWonderwall", 
+            "immaletyoufinish", "do_not_disturb", "0p_rah", "average_student", "Something", "crazy_cat_lady", 
+            "kiss-my-axe", "unsupportedfile", "KanyeEast", "pluralizes_everythings", "uncommonname", 
+            "HashtagHustle", "me_for_president", "unsolicited_opinions", "thoughts_for_sale", "no_one_asked", 
+            "GrammarMaster", "srsly_rowling", "test_name_please_ignore", "DevilsAdvocate", "unfinished_sentenc", 
+            "hogwartsdropout", "AllGoodNamesRGone", "ALLCAPS", "thegodfatherIV", "LactoseAndIntolerant", 
+            "MustLoveDogs", "all_strings_attached", "WifeyMaterial", "HubbyMaterial", "wherefore_art_thou_romeo", 
+            "Mr.Right", "Mrs.Right", "PrinceCharming", "PrincessCharming", "i_can_cook", "moms_love_me", 
+            "BaeCatcher", "MagicMike", "SeekingDogsitter", "dont_friendzone_me", "mines_a_cosmopolitan", 
+            "date_me", "just_another_single_guy", "Rebounding", "meet_me_at_the_aisle", "SwipeRight", 
+            "LeftOnRead", "NoGhostsAllowed", "serious_applicants_only", "MustLoveTequila", "IdiotsNeedNotApply", 
+            "Mrs_Your_Last_Name", "looking_for_love", "casanova", "Home_wrecker", "Generic Funny Usernames", 
+            "InternetAunt", "Beyonce_Beytwice", "Billie_Eyelash", "StaceysMom", "AgonyAunt", "SylviaPsyoplath", 
+            "what_would_sara_do", "JaneDoe", "JaneDon’t", "InternetMom", "Jane_Bond", "WendyWacko", 
+            "crazyfeministblog", "AnnaConda", "dumbblonde", "champagnemami", "mother_of_dragons", "ashley_said_what", 
+            "catmom", "Wonderwoman", "chiquitita", "Cardi_C", "AnnaSummer", "momager", "Sleeping_beauty", 
+            "over_the_lorrainebow", "rejectedbachelorcontestant", "itsBritneyB1tch", "ArianaVenti", 
+            "KaraKardashian", "100percentthatbetch", "Pixelated Pizza", "InternetUncle", "Jonah_Moutain", 
+            "HairyPoppins", "A$APSofty", "not_james_bond", "Justin_Case", "Christopher_Sittin", "well_endowed", 
+            "Morgan_NotFreeman", "imjustjoeking", "MechanicMike", "grahams_crackers", "JohnDoe", "JohnDon’t", 
+            "CaptainJackNarrow", "Jim_Doesnt_Carrey", "BearGrills", "dumbest_man_alive", "catdad", "not_so_superman", 
+            "videojames", "videojane", "I_Do_Destruction", "MarioFart", "I_Shoot_You_Die", "Pikachew", "Semi_Dead"
+        ];
+    
+        function generateUsername() {
+            const randomIndex = Math.floor(Math.random() * usernames.length);
+            const randomUsername = usernames[randomIndex];
+            document.getElementById("username").value = randomUsername;  // Set the generated username in the input field
+        }
+
+
+    </script>
+</body>
+</html>

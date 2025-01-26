@@ -1,5 +1,13 @@
 [
     {
-        "email": "xyz6@gmail.com"
+        "id": "12345678-abcd-efgh-ijkl-1234567890ab",
+        "email": "user1@example.com",
+        "username": "Quantum_Quirk",
+        "username_set": true
+    },
+    {
+        "id": "87654321-abcd-efgh-ijkl-0987654321ba",
+        "email": "user2@example.com",
+        "username_set": false
     }
 ]
