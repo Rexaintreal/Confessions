@@ -1,3 +1,6 @@
+<p align="center">
+  <img src="https://github.com/Rexaintreal/Confessions/blob/main/static/github-logo.png" alt="Cupid's Diary Banner" width="250">
+</p>
 <h1 align="center">Confessions</h1>
 
 <p align="center">
@@ -26,8 +29,16 @@ Confessions is live and available for anyone to use! Share your thoughts anonymo
 - **Website**: [Confessions](https://confessit.pythonanywhere.com/)
   
 <p align="center">
-  <img src="static/screenshot.jpeg" alt="Confessions App Screenshot" width="300">
+  <img src="static/screens/create_post-dark.png" alt="create_post-dark" width="200" style="margin-right: 20px;">
+  <img src="static/screens/index-dark.png" alt="index-dark" width="200" style="margin-right: 20px;">
+  <img src="static/screens/profile-dark.png" alt="profile-dark" width="200" style="margin-right: 20px;">
 </p>
+<p align="center">
+  <img src="static/screens/index-light.png" alt="index-light" width="200">
+  <img src="static/screens/create_post-light.png" alt="create_post-light" width="200">
+  <img src="static/screens/profile-light.png" alt="profile-light" width="200">
+</p>
+
 
 ---
 
@@ -42,10 +53,25 @@ Confessions is live and available for anyone to use! Share your thoughts anonymo
 ---
 
 ## 🌐 Accessing the Website
-
 You can visit *Confessions* at [Confessions](https://confessit.pythonanywhere.com/).
 
 ---
+
+## 🆕 Update 1.0
+
+Here are the key updates in version 1.0 of Confessions:
+
+- **UI Enhancements**: The user interface has been significantly improved, focusing on ease of use, mobile responsiveness, and a clean, modern design.
+- **Post Timestamps**: All confessions now have timestamps, showing the date and time each post was made for better context.
+- **Dark Mode Toggle**: Users can now toggle between dark and light modes for a more customizable and comfortable experience.
+- **Character Limit and Live Counter (500 Characters)**: The confession text box now includes a live character counter that limits the confession to 300 characters, ensuring concise and readable posts.
+- **Live Confession Preview**: As users type their confession, they can preview it live, ensuring that everything looks as intended before posting.
+- **Draft Confessions**: Users can now save their confessions as drafts and come back to them later before posting them publicly.
+- **Unique User ID and Username**: Each user is now assigned a unique ID, and they can create a personalized username for their profile.
+- **Profile Tab**: The Profile tab now displays the user’s username, the number of posts they’ve made, and their email address, providing more insight into their activity on the platform.
+
+Stay tuned for more updates and improvements in the upcoming versions!
+
 
 ## 🚀 Future Plans
 
