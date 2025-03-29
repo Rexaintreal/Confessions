@@ -98,8 +98,11 @@ We welcome any contributions to enhance the platform, whether it's new features,
 ---
 
 ## 👨‍💻 Author
+(This Project was mostly [Vibe Coded](https://en.wikipedia.org/wiki/Vibe_coding)
+
 
 Confessions was created by [Saurabh Tiwari](https://github.com/Rexaintreal). 
+
 
 You can reach out to Saurabh at:
 
